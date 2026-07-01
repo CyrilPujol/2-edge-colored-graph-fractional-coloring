@@ -414,7 +414,11 @@ if __name__ == "__main__":
 			to_explore.extend(predecessors)
 			remove_duplicate_runs(to_explore, safe_runs)  # Remove duplicates and already safe runs
 			unsafe_runs.append((runs, pos))
-			print(f"Unsafe: {runs} (size {sum(runs)})")
+			val, _ = frac_coloring_2ec(runs_to_graph(runs),print_solution=False)
+			if val > 3.5000000001:
+				print(f"Unsafe: {runs} at pos {pos} (size {sum(runs)}) chi = {val} > 7/2")
+			else:
+				print(f"Unsafe: {runs} at pos {pos} (size {sum(runs)})")
 	print(f"Exploration finished")
 
 	print(f"List of safe runs: {len(safe_runs)}")
