@@ -386,16 +386,17 @@ def is_safe(runs):
 
 
 if __name__ == "__main__":
+	print(f"___Begin___")
 	n = 18
 	fold_graph = build_fold_graph(n)
 	sinks = [node for node in fold_graph.nodes() if fold_graph.out_degree(node) == 0]
-	print(f"fold_graph: nodes={fold_graph.number_of_nodes()}, edges={fold_graph.number_of_edges()}, sinks={len(sinks)}")
+	print(f"Fold Graph    nodes:{fold_graph.number_of_nodes()}, edges:{fold_graph.number_of_edges()}, sinks:{len(sinks)}")
 
 	to_explore = cp.copy(sinks)
 	safe_runs = []
 	unsafe_runs = []
 
-	print(f"Starting exploration")
+	print(f"Starting exploration (it should take about 2 hours)")
 	while to_explore:
 		runs = to_explore.pop()
 		
@@ -407,7 +408,7 @@ if __name__ == "__main__":
 			
 		if safe:
 			safe_runs.append(runs)
-			print(f"Safe: {runs} (size {sum(runs)})")
+			print(f"✅ Safe: {runs} (size {sum(runs)})")
 		else:
 			# If not safe, add all predecessors to todo for further checking
 			predecessors = list(fold_graph.predecessors(runs))
@@ -416,9 +417,9 @@ if __name__ == "__main__":
 			unsafe_runs.append((runs, pos))
 			val, _ = frac_coloring_2ec(runs_to_graph(runs),print_solution=False)
 			if val > 3.5000000001:
-				print(f"Unsafe: {runs} at pos {pos} (size {sum(runs)}) chi = {val} > 7/2")
+				print(f"❌ Bad: {runs} (size {sum(runs)}) chi = {val} > 7/2")
 			else:
-				print(f"Unsafe: {runs} at pos {pos} (size {sum(runs)})")
+				print(f"⚠️ Unsafe: {runs} (size {sum(runs)})")
 	print(f"Exploration finished")
 
 	print(f"List of safe runs: {len(safe_runs)}")
@@ -429,3 +430,5 @@ if __name__ == "__main__":
 			print(f"{run},    size {sum(run)}  (alternating cycle)")
 		else:
 			print(f"{run},    size {sum(run)}")
+	
+	print(f"____End____")
