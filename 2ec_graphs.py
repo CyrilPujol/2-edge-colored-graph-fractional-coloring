@@ -1,9 +1,7 @@
 import linear_prog as lp
 import numpy as np
 import networkx as nx
-import time as ti
 import copy as cp
-import random as rd
 
 
 def remove_consecutive(L):
